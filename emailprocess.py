@@ -12,7 +12,7 @@ def clean_emails(input_csv, output_csv):
             df = pd.read_csv(input_csv, encoding='iso-8859-1')
     
     # 定义需要删除的无效邮件地址关键词
-    invalid_domains = ['wixpress', 'godaddy', 'sentry', 'jpg','null','no-reply']
+    invalid_domains = ['wixpress', 'godaddy', 'sentry', 'jpg','null','no-reply','noreply','example.com']
     
     # 处理Emails列
     def remove_invalid_emails(email_str):
@@ -44,7 +44,7 @@ def clean_emails(input_csv, output_csv):
     df.to_csv(output_csv, index=False)
 
 # 指定要处理的目录路径
-directory_path = '.'
+directory_path = './process email here'
 
 # 遍历目录下的所有文件
 for filename in os.listdir(directory_path):

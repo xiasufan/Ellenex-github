@@ -8,7 +8,7 @@ def detect_encoding(file_path):
     return result['encoding']
 
 # 指定要处理的目录
-directory = '.'
+directory = './combine here'
 
 # 初始化一个空的数据框，用于存储所有合并的数据
 combined_df = pd.DataFrame()
