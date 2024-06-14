@@ -2,24 +2,24 @@ import pandas as pd
 import os
 
 def clean_emails(input_csv, output_csv):
-    # 尝试不同编码读取CSV文件
+    # 尝试不同编码读取CSV文件，并跳过错误的行
     try:
-        df = pd.read_csv(input_csv, encoding='utf-8')
+        df = pd.read_csv(input_csv, encoding='utf-8', on_bad_lines='skip')
     except UnicodeDecodeError:
         try:
-            df = pd.read_csv(input_csv, encoding='latin1')
+            df = pd.read_csv(input_csv, encoding='latin1', on_bad_lines='skip')
         except UnicodeDecodeError:
-            df = pd.read_csv(input_csv, encoding='iso-8859-1')
+            df = pd.read_csv(input_csv, encoding='iso-8859-1', on_bad_lines='skip')
     
     # 定义需要删除的无效邮件地址关键词
-    invalid_domains = ['wixpress', 'godaddy', 'sentry', 'jpg','null','no-reply','noreply','example.com']
+    invalid_domains = ['wixpress', 'godaddy', 'sentry', 'jpg', 'null', 'no-reply', 'noreply', 'example.com', 'example', 'domain.com']
     
     # 处理Emails列
     def remove_invalid_emails(email_str):
         if pd.isna(email_str) or not isinstance(email_str, str):
             return email_str
         emails = email_str.split(';')
-        valid_emails = [email for email in emails if not any(domain in email for domain in invalid_domains)]
+        valid_emails = [email.lower() for email in emails if not any(domain in email.lower() for domain in invalid_domains)]
         return ';'.join(valid_emails)
     
     # 应用处理函数到Emails列

@@ -40,6 +40,9 @@ for filename in os.listdir(directory):
         # 记录多余的列名
         extra_columns.update(df.columns.difference(combined_df.columns))
 
+# 删除'Emails'列的重复行
+combined_df.drop_duplicates(subset='Emails', keep='first', inplace=True)
+
 # 构建新文件名
 output_filename = 'combined_processed_files.csv'
 output_file_path = os.path.join(directory, output_filename)
