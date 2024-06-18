@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import re 
 
 def clean_emails(input_csv, output_csv):
     # 尝试不同编码读取CSV文件，并跳过错误的行
@@ -18,8 +19,8 @@ def clean_emails(input_csv, output_csv):
     def remove_invalid_emails(email_str):
         if pd.isna(email_str) or not isinstance(email_str, str):
             return email_str
-        emails = email_str.split(';')
-        valid_emails = [email.lower() for email in emails if not any(domain in email.lower() for domain in invalid_domains)]
+        emails = re.split(r'[;,]', email_str)  # 使用正则表达式同时考虑分号和逗号
+        valid_emails = [email.lower().strip() for email in emails if not any(domain in email.lower() for domain in invalid_domains)]
         return ';'.join(valid_emails)
     
     # 应用处理函数到Emails列
@@ -29,7 +30,7 @@ def clean_emails(input_csv, output_csv):
     def split_emails(row):
         if pd.isna(row['Emails']) or not isinstance(row['Emails'], str):
             return pd.DataFrame({**row.drop(labels=['Emails']), 'Emails': []})
-        emails = row['Emails'].split(';')
+        emails = re.split(r'[;,]', row['Emails'])  # 使用正则表达式同时考虑分号和逗号
         other_columns = row.drop(labels=['Emails']).to_dict()
         return pd.DataFrame({**other_columns, 'Emails': emails})
     
