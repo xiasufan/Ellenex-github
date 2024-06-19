@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/xiasufan/Ellenex-github/static/css/main.19131162.css",
-    "main.js": "/xiasufan/Ellenex-github/static/js/main.8a5081ac.js",
-    "static/js/453.46ed5172.chunk.js": "/xiasufan/Ellenex-github/static/js/453.46ed5172.chunk.js",
-    "index.html": "/xiasufan/Ellenex-github/index.html",
-    "main.19131162.css.map": "/xiasufan/Ellenex-github/static/css/main.19131162.css.map",
-    "main.8a5081ac.js.map": "/xiasufan/Ellenex-github/static/js/main.8a5081ac.js.map",
-    "453.46ed5172.chunk.js.map": "/xiasufan/Ellenex-github/static/js/453.46ed5172.chunk.js.map"
+    "main.css": "/Ellenex-github/static/css/main.19131162.css",
+    "main.js": "/Ellenex-github/static/js/main.68f46ea9.js",
+    "static/js/453.46ed5172.chunk.js": "/Ellenex-github/static/js/453.46ed5172.chunk.js",
+    "index.html": "/Ellenex-github/index.html",
+    "main.19131162.css.map": "/Ellenex-github/static/css/main.19131162.css.map",
+    "main.68f46ea9.js.map": "/Ellenex-github/static/js/main.68f46ea9.js.map",
+    "453.46ed5172.chunk.js.map": "/Ellenex-github/static/js/453.46ed5172.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.19131162.css",
-    "static/js/main.8a5081ac.js"
+    "static/js/main.68f46ea9.js"
   ]
 }
