@@ -1,43 +1,61 @@
-// src/App.js
 import React, { useState } from 'react';
-import FileUpload from './components/FileUpload';
+import axios from 'axios';
 import './App.css';
 
-function App() {
-  const [data, setData] = useState([]);
+const App = () => {
+  const [url, setUrl] = useState('');
+  const [keyword, setKeyword] = useState('');
+  const [result, setResult] = useState({ summary: '', similarity: 0, keyword: '' });
+  const [loading, setLoading] = useState(false);  // 添加loading状态
 
-  const handleFileUpload = (uploadedData) => {
-    setData(uploadedData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);  // 请求开始时设置loading为true
+
+    try {
+      const response = await axios.post('http://localhost:5000/analyze', { url, keyword });
+      console.log('API response:', response.data);  // 调试日志
+      setResult({ ...response.data, keyword });  // 保存结果并包含关键词
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setResult({ summary: 'Error', similarity: 0, keyword });
+    } finally {
+      setLoading(false);  // 请求完成后设置loading为false
+    }
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>CSV Upload and Display</h1>
-        <FileUpload onFileUpload={handleFileUpload} />
-        {data.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(data[0]).map((key) => (
-                  <th key={key}>{key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row, index) => (
-                <tr key={index}>
-                  {Object.values(row).map((value, i) => (
-                    <td key={i}>{value}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="container">
+      <h1>Website Analyzer</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="Enter website URL"
+        />
+        <input
+          type="text"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder="Enter a short description of your target market"
+        />
+        <button type="submit">Analyze</button>
+      </form>
+      <div className="results">
+        {loading ? (  // 条件渲染加载指示器
+          <p className="loading">Loading...</p>
+        ) : (
+          <>
+            <h2>Results</h2>
+            <p>Website Summary: {result.summary}</p>
+            <p>Keyword: {result.keyword}</p>
+            <p>Keyword Match Score: {result.similarity.toFixed(2)}</p>
+          </>
         )}
-      </header>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
